@@ -488,3 +488,25 @@ class ImageControl implements SelectableControl {
 
 // 在`Control`类内部，是允许通过`SelectableControl`的实例来访问私有成员`state`的。 实际上，`SelectableControl`就像`Control`一样，并拥有一个`select`方法。 `Button`和`TextBox`类是`SelectableControl`的子类（因为它们都继承自`Control`并有`select`方法）。而对于 `ImageControl` 类，它有自身的私有成员 `state` 而不是通过继承 `Control` 得来的，所以它不可以实现 `SelectableControl` 。
 
+
+/*
+ * typeof
+ */
+
+const myBox = {
+  x:1,
+  y:2,
+  z:3,
+  color:"#fff"
+};
+
+type Box = typeof myBox;
+type BoxValue = typeof myBox['x'|'y'|'z'];
+
+const myArr = [10,9,8,7,"x",true] as const;
+type MyArrValue = typeof myArr[number];
+
+/**
+ * keyof
+ */
+type BoxKey = keyof typeof myBox;
