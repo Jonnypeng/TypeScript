@@ -422,10 +422,10 @@ interface Square extends Shape, PenStroke {
   sideLength: number;
 }
 
-let square = {} as Square;
-square.color = "blue";
-square.sideLength = 10;
-square.penWidth = 5.0;
+let newSquare = {} as Square;
+newSquare.color = "blue";
+newSquare.sideLength = 10;
+newSquare.penWidth = 5.0;
 
 // 混合类型
 
@@ -490,7 +490,7 @@ class ImageControl implements SelectableControl {
 
 
 /*
- * typeof
+ * typeof 映射类型
  */
 
 const myBox = {
@@ -507,6 +507,104 @@ const myArr = [10,9,8,7,"x",true] as const;
 type MyArrValue = typeof myArr[number];
 
 /**
- * keyof
+ * keyof 映射键
  */
+
 type BoxKey = keyof typeof myBox;
+
+
+/**
+ * Partial<Type> 构造一个 Type 的所有属性都设置为 optional 的类型。此实用程序将返回表示给定类型的所有子集的类型
+ */
+
+ interface Todo1 {
+  title: string;
+  description: string;
+}
+
+type OptionTodo = Partial<Todo1>;
+
+/**
+ * Required<Type> 构造一个由 Type 设置为 required 的所有属性组成的类型。与Partial相反
+ */
+
+ interface Todo2 {
+  title?: string;
+  description?: string;
+}
+
+type RequiredTodo = Required<Todo2>;
+
+/**
+ * Readonly<Type>
+ */
+
+type ReadonlyTodo = Readonly<Todo2>;
+
+const readonlyTodoIm: ReadonlyTodo = {
+  description:'ss'
+}
+
+readonlyTodoIm.title = 'abc'; // err Cannot assign to 'title' because it is a read-only property
+
+/**
+ * Record<Keys,Type>
+ */
+ interface CatInfo {
+  age: number;
+  breed: string;
+}
+
+type CatName = "miffy" | "boris" | "mordred";
+
+type Cat = Record<CatName,CatInfo>;
+
+const myCat: Cat= {
+  miffy:{
+    age:10,
+    breed:'ss'
+  }
+}
+
+/**
+ * Pick<Type, Keys> 从一个接口中以字符串key复制类型到新类型中
+ */
+ interface Todo3 {
+  title: string;
+  description: string;
+  completed: boolean;
+}
+
+type TodoPreview = Pick<Todo3, "title" | "completed">;
+
+const todo: TodoPreview = {
+  title: "Clean room",
+  completed: false,
+};
+
+/**
+ * Omit<Type, Keys> 从一个接口中以字符串key删除相应的类型,产生新的类型
+ */
+
+interface AppInfo{
+  name: string;
+  devName: string;
+  phone: string;
+}
+
+type SimAppInfo = Omit<AppInfo,"phone">;
+
+const app: SimAppInfo = {
+  name:'abc',
+  devName:'ef'
+}
+
+/**
+ * Exclude<Type, ExcludedUnion> 在原来的接口中排除非唯一标识符字符串后得到的 只包含唯一标识符的类型
+ */
+
+ type T0 = Exclude<"a" | "b" | "c", "a">;
+ type T1 = Exclude<"a" | "b" | "c", "a" | "b">;
+ type T2 = Exclude<string | number | (() => void), Function>;
+
+ 
