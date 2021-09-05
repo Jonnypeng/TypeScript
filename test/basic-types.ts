@@ -32,6 +32,9 @@ x = [10, 'hello']; // Error
 console.log(x[0].substr(1)); // OK 
 console.log(x[1].substr(1)); // Error, 'number' does not have 'substr'
 
+type MyDate = `${number}年-${number}月`;
+const year:MyDate = '12331年-122233月';
+
 // 当访问一个越界的元素会报错。
 x[3] = "world"; // Error, Property '3' does not exist on type '[string, number]'.
 console.log(x[5].toString()); // Error, Property '5' does not exist on type '[string, number]'.

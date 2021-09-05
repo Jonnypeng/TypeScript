@@ -607,4 +607,27 @@ const app: SimAppInfo = {
  type T1 = Exclude<"a" | "b" | "c", "a" | "b">;
  type T2 = Exclude<string | number | (() => void), Function>;
 
- 
+
+ /**
+  * 在泛型中映射键的子集
+  */
+function getValue<T,K extends keyof T>(obj:T,key: K):T[K]{
+  return obj[key];
+}
+
+getValue({name:'jonny'},'name');
+
+
+/**
+ * in 操作符，映射所有key属性，而不是子集
+ */
+type Option<T> = {
+  [K in keyof T]?: T;
+}
+
+interface Log{
+  name:'jonny',
+  age: 10
+}
+
+type OptionLog = Option<Log>;
